@@ -12,6 +12,7 @@ from keras import backend as K
 from data.data_loader import load_data
 from data import mscoco as dataset
 from models.enet import autoencoder, transfer_weights
+from models.DenseNet_FCN import DenseNet_FCN
 
 
 def callbacks(log_dir, checkpoint_dir, model_name):
@@ -59,7 +60,7 @@ def train(solver, dataset_name):
     data_shape = dw * dh
     nc = len(dataset.ids())  # categories + background
 
-    autoenc, model_name = autoencoder(nc=nc, input_shape=(dw, dh))
+    autoenc, model_name = DenseNet_FCN(input_shape=(dw, dh))
     if 'h5file' in solver:
         h5file = solver['h5file']
         print('Loading model {}'.format(h5file))
@@ -89,7 +90,7 @@ def train(solver, dataset_name):
                                shuffle=True)
     nb_train_samples = train_gen.next()  # first generator item is the count
 
-    val_gen = load_data(dataset, 
+    val_gen = load_data(dataset,
                                data_dir=os.path.join('data', dataset_name),
                                batch_size=batch_size,
                                nc=nc,
