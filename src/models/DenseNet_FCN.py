@@ -43,8 +43,7 @@ def DenseNet_FCN(input_shape=None, weight_decay=0.,
                                         input_shape=input_shape,
                                         nb_layers_per_block=[4, 5, 7, 10, 12, 15],
                                         growth_rate=16,
-                                        dropout_rate=0.2,
-                                        input_tensor=input_tensor)
+                                        dropout_rate=0.2)
 
     x = Reshape((pixel_count, classes), input_shape=shape_in)(x)
     x = Activation('softmax')(x)
