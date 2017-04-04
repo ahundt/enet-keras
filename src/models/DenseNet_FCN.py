@@ -31,7 +31,7 @@ def Atrous_DenseNet(input_shape=None, weight_decay=0.,
                              transition_pooling=None)
 
 
-def DenseNet_FCN(input_shape=None, weight_decay=0.,
+def DenseNet_FCN(input_shape=None, weight_decay=1E-4,
                  batch_momentum=0.9, batch_shape=None, classes=21,
                  optimizer='adam', loss='categorical_crossentropy'):
     pixel_count = input_shape[0]*input_shape[1]
@@ -45,7 +45,11 @@ def DenseNet_FCN(input_shape=None, weight_decay=0.,
                                         growth_rate=16,
                                         dropout_rate=0.2)
 
-    x = Reshape((pixel_count, classes), input_shape=shape_in)(x)
+    x = Conv2D(classes, (1, 1), activation='linear',
+               padding='same', kernel_regularizer=l2(weight_decay),
+               use_bias=False)(x)
+    x = Reshape((pixel_count, classes),
+                input_shape=(input_shape[0], input_shape[1], classes))(x)
     x = Activation('softmax')(x)
     name = 'DenseNet_FCN'
     model = Model(input_tensor, x, name=name)
