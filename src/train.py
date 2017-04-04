@@ -11,7 +11,7 @@ from keras import backend as K
 
 from data.data_loader import load_data
 from data import mscoco as dataset
-from models.enet import autoencoder, transfer_weights
+# from models.enet import autoencoder, transfer_weights
 from models.DenseNet_FCN import DenseNet_FCN
 
 
@@ -66,8 +66,8 @@ def train(solver, dataset_name):
         print('Loading model {}'.format(h5file))
         h5file, ext = os.path.splitext(h5file)
         autoenc.load_weights(h5file + ext)
-    else:
-        autoenc = transfer_weights(autoenc)
+    # else:
+    #     autoenc = transfer_weights(autoenc)
 
     if K.backend() == 'tensorflow':
         print('Tensorflow backend detected; Applying memory usage constraints')
