@@ -40,7 +40,7 @@ def DenseNet_FCN(input_shape=None, weight_decay=0.,
     x = densenet.__create_fcn_dense_net(classes,
                                         input_tensor,
                                         False,  # include_top
-                                        input_shape=input_shape,
+                                        input_shape=shape_in,
                                         nb_layers_per_block=[4, 5, 7, 10, 12, 15],
                                         growth_rate=16,
                                         dropout_rate=0.2)
